@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 
-function UserModuleComponent(props) {
+function UserRoleComponent(props) {
   const [user, setUser] = useState('')
   const [userid, setUserid] = useState('')
-  const [module, setModule] = useState('')
-  const [moduleid, setModuleid] = useState('')
+  const [role, setRole] = useState('')
+  const [roleid, setRoleid] = useState('')
   const [options, setOptions] = useState([])
 
-  const [optionsmodule, setOptionsModule] = useState([])
+  const [optionsrole, setOptionsRole] = useState([])
   const [showDropdowna, setShowDropdowna] = useState(false)
   const [showDropdownb, setShowDropdownb] = useState(false)
   const [loadinga, setLoadinga] = useState(false)
@@ -35,18 +35,18 @@ function UserModuleComponent(props) {
     }
   }, [user])
   useEffect(() => {
-    if (module) {
+    if (role) {
       setLoadingb(true)
       // Call your API here with the entered role value
-      fetch(`http://3.13.92.74:30001/acl/admin/module/name/${module}`)
+      fetch(`http://3.13.92.74:30001/acl/admin/role/name/${role}`)
         .then((response) => response.json())
         .then((data) => {
           setLoadingb(false)
           // Update the options state with the data received from the API
           console.log(data)
           if (data.response.status !== '204') {
-            setOptionsModule([data.response])
-            console.log(optionsmodule)
+            setOptionsRole([data.response])
+            console.log(optionsrole)
             setShowDropdownb(true)
           } else {
             setShowDropdownb(false)
@@ -54,7 +54,7 @@ function UserModuleComponent(props) {
         })
         .catch((error) => console.error(error))
     }
-  }, [module])
+  }, [role])
 
   const handleCancelClick = () => {
     props.showComponent(false)
@@ -68,20 +68,22 @@ function UserModuleComponent(props) {
 
     setShowDropdowna(false)
   }
-  const handleOptionModuleClick = (option) => {
+  const handleOptionRoleClick = (option) => {
     // Update the role state with the selected option
 
-    setModule(option.name)
-    setModuleid(option.id)
+    setRole(option.name)
+    setRoleid(option.id)
     setShowDropdownb(false)
   }
   const handleAddModule = async () => {
     const moduleData = {
-     userId: userid,
-      moduleId: moduleid,
+      userId: userid,
+      entityType:"Account",
+      entityId:"",
+      roleId: roleid,
     }
     try {
-      const response = await fetch('http://3.13.92.74:30001/acl/admin/user-module', {
+      const response = await fetch('http://3.13.92.74:30001/acl/admin/user-entity-role', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -113,9 +115,13 @@ function UserModuleComponent(props) {
             {loadinga && <p>Loading...</p>}
             {!loadinga && showDropdowna && options && (
               <div className="pl-12">
-                <ul className="border border-gray-400 p-1 rounded-sm " style={{ width: '28.5%' }}>
+                <ul  style={{ width: '28.5%' }}>
                   {options.map((option) => (
-                    <li key={option.id} onClick={() => handleOptionClick(option)}>
+                    <li
+                      className="border border-gray-400 p-1 rounded-sm "
+                       key={option.id}
+                      onClick={() => handleOptionClick(option)}
+                    >
                       {option.userName}
                     </li>
                   ))}
@@ -123,19 +129,38 @@ function UserModuleComponent(props) {
               </div>
             )}
           </h2>
+          <h2
+            className="text-lg font-medium"
+            style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center' }}
+          >
+            <span className="font-bold" style={{ marginRight: '1rem' }}>
+              Entity Type:
+            </span>
+            <p className="h-10 border border-gray-400 p-1 rounded-sm" style={{ flex: 0.3 }}>
+              Account
+            </p>
+          </h2>
+
+          <h2
+            className="text-lg font-medium"
+            style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center' }}
+          >
+            <span className="font-bold">Entity Id:</span>
+            <p className="h-10 border border-gray-400 p-1 rounded-sm" style={{ flex: 0.3 }}></p>
+          </h2>
           <h2 className="text-lg font-medium">
-            <span className="font-bold">Module:</span>{' '}
+            <span className="font-bold">Role:</span>{' '}
             <input
               className="border border-gray-400 p-1 rounded-sm"
-              value={module}
-              onChange={(e) => setModule(e.target.value)}
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
             />
             {loadingb && <p>Loading...</p>}
-            {!loadingb && showDropdownb && optionsmodule && (
+            {!loadingb && showDropdownb && optionsrole && (
               <div className="pl-12">
                 <ul className="border border-gray-400 p-1 rounded-sm" style={{ width: '28.5%' }}>
-                  {optionsmodule.map((option) => (
-                    <li key={option.id} onClick={() => handleOptionModuleClick(option)}>
+                  {optionsrole.map((option) => (
+                    <li key={option.id} onClick={() => handleOptionRoleClick(option)}>
                       {option.name}
                     </li>
                   ))}
@@ -177,4 +202,4 @@ function UserModuleComponent(props) {
   )
 }
 
-export default UserModuleComponent
+export default UserRoleComponent

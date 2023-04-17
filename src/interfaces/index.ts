@@ -196,6 +196,13 @@ export type Dairy = {
     moduleType: string
     subModuleList: string[]
   }
+  export type User = {
+    id: string
+    userName: string
+    authenticationProvider: string
+    authenticationWay: string
+    authenticationProviderId: string
+  }
   
  export type WeekDiet = {
    id: string

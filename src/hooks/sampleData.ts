@@ -284,6 +284,19 @@ export const useSampleModules= () => {
     isError: error,
   }
 }
+export const useSampleUsers = (pageNumber: number) => {
+  const { data, error } = useSWR(
+    `http://3.13.92.74:30006/authentication/admin/user?pageNumber=${pageNumber}&pageSize=5`,
+    fetcher
+  )
+  const user = data ?? []
+
+  return {
+    user,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
  export const useSampleLabels = () => {
    const { data, error } = useSWR('/admin-one-react-tailwind/data-sources/clients.json', fetcher)
    
