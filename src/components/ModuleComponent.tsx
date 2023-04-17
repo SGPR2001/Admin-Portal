@@ -44,14 +44,22 @@ function ModuleComponent(props) {
         <div style={{ width: '80%' }}>
           <h2 className="text-lg font-medium">
             <span className="font-bold">Name:</span>{' '}
-            <p className="border border-gray-400 p-1 rounded-sm">
-              <input value={name} onChange={(e) => setName(e.target.value)} />
+            <p>
+              <input
+                className="border border-gray-400 p-1 rounded-sm"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </p>
           </h2>
           <h2 className="text-lg font-medium">
             <span className="font-bold">Description:</span>{' '}
-            <p className="border border-gray-400 p-1 rounded-sm">
-              <input value={description} onChange={(e) => setDescription(e.target.value)} />
+            <p >
+              <input
+                className="border border-gray-400 p-1 rounded-sm"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </p>
           </h2>
           <h2 className="text-lg font-medium">

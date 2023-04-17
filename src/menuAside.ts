@@ -20,7 +20,8 @@ const menuAside: MenuAsideItem[] = [
       { href: '/module', label: 'Module' },
       { href: '/role', label: 'Role' },
       { href: '/permission', label: 'Permission' },
-     
+      { href: '/rolepermission', label: 'Role-Permission' },
+      { href: '/usermodule', label: 'User-Module' }
     ],
   },
   {

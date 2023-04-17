@@ -66,7 +66,8 @@ const TablesPage = () => {
       <SectionMain>
         <CardBox className="mb-6">
           <div className="flex justify-between">
-            <CardBox className=" bg-gradient-to-tr from-gray-500 via-gray-500 to-gray-500 mb-6 ">
+            {/* className=" bg-gradient-to-tr from-gray-500 via-gray-500 to-gray-500 mb-6 " */}
+            <CardBox>
               <div className="flex justify-end">
                 <select
                   value={searchOption}
@@ -111,10 +112,10 @@ const TablesPage = () => {
                 />
               </div>
             </CardBox>
-            <CardBox className=" bg-gradient-to-tr from-gray-500 via-gray-500 to-gray-500 mb-6 ">
+            <CardBox>
               <div>
                 <BaseButton
-                  label="Create Module"
+                  label="Create Role"
                   onClick={() => setShowComponent(true)}
                   className="bg-blue-500 border-blue-500 hover:bg-[#7dd3fc] text-white font-bold py-2 px-4 rounded"
                 />
@@ -122,9 +123,11 @@ const TablesPage = () => {
             </CardBox>
           </div>
         </CardBox>
-        {showComponent&&<CardBox className="mb-6">
-          <RoleComponent showComponent={handleCancelClick}/>
-        </CardBox>}
+        {showComponent && (
+          <CardBox className="mb-6">
+            <RoleComponent showComponent={handleCancelClick} />
+          </CardBox>
+        )}
         <CardBox className="mb-6">
           {searchId.length > 0
             ? data.map((role: Role) => (
