@@ -78,7 +78,7 @@ function UserRoleComponent(props) {
   const handleAddModule = async () => {
     const moduleData = {
       userId: userid,
-      entityType:"Account",
+      entityType:"ACCOUNT",
       entityId:"",
       roleId: roleid,
     }
@@ -137,7 +137,7 @@ function UserRoleComponent(props) {
               Entity Type:
             </span>
             <p className="h-10 border border-gray-400 p-1 rounded-sm" style={{ flex: 0.3 }}>
-              Account
+              ACCOUNT
             </p>
           </h2>
 

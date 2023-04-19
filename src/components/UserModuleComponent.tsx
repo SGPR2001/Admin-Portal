@@ -88,11 +88,27 @@ function UserModuleComponent(props) {
         },
         body: JSON.stringify(moduleData),
       })
+      console.log(response)
       if (response.ok) {
         console.log('File uploaded successfully')
+
         props.showComponent(false)
+
       } else {
         console.error('Error uploading file')
+        // const cardbox = document.createElement('div')
+        // cardbox.textContent = 'Module not created'
+        // cardbox.style.backgroundColor = '#d9534f'
+        // cardbox.style.color = '#fff'
+        // cardbox.style.padding = '1rem'
+        // cardbox.style.position = 'fixed'
+        // cardbox.style.bottom = '1rem'
+        // cardbox.style.right = '1rem'
+        // cardbox.style.zIndex = '9999'
+        // document.body.appendChild(cardbox)
+        // setTimeout(() => {
+        //   cardbox.remove()
+        // }, 3000)
       }
     } catch (error) {
       console.error(error)
@@ -113,9 +129,9 @@ function UserModuleComponent(props) {
             {loadinga && <p>Loading...</p>}
             {!loadinga && showDropdowna && options && (
               <div className="pl-12">
-                <ul className="border border-gray-400 p-1 rounded-sm " style={{ width: '28.5%' }}>
+                <ul  style={{ width: '28.5%' }}>
                   {options.map((option) => (
-                    <li key={option.id} onClick={() => handleOptionClick(option)}>
+                    <li className="border border-gray-400 p-1 rounded-sm " key={option.id} onClick={() => handleOptionClick(option)}>
                       {option.userName}
                     </li>
                   ))}
@@ -132,7 +148,7 @@ function UserModuleComponent(props) {
             />
             {loadingb && <p>Loading...</p>}
             {!loadingb && showDropdownb && optionsmodule && (
-              <div className="pl-12">
+              <div className="pl-14">
                 <ul className="border border-gray-400 p-1 rounded-sm" style={{ width: '28.5%' }}>
                   {optionsmodule.map((option) => (
                     <li key={option.id} onClick={() => handleOptionModuleClick(option)}>

@@ -14,17 +14,16 @@ const TablesPage = () => {
   return (
     <>
       <SectionMain>
-        <CardBox className="mb-6">
-          <CardBox className=" bg-gradient-to-tr from-gray-500 via-gray-500 to-gray-500 mb-6 ">
-            <div>
-              <BaseButton
-                label="Create User-Role"
-                onClick={() => setShowComponent(true)}
-                className="bg-blue-500 border-blue-500 hover:bg-[#7dd3fc] text-white font-bold py-2 px-4 rounded"
-              />
-            </div>
-          </CardBox>
+        <CardBox className=" mb-6 ">
+          <div className="flex justify-end">
+            <BaseButton
+              label="Create User-Role"
+              onClick={() => setShowComponent(true)}
+              className="bg-blue-500 border-blue-500 hover:bg-[#7dd3fc] text-white font-bold py-2 px-4 rounded"
+            />
+          </div>
         </CardBox>
+
         {showComponent && (
           <CardBox className="mb-6">
             <UserRoleComponent showComponent={handleCancelClick} />

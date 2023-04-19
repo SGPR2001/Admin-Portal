@@ -35,9 +35,7 @@ const menuNavBar: MenuNavBarItem[] = [
   //     },
   //   ],
   // },
-      {
-        label:'LYBL'
-      }
+     
   // {
   //   isCurrentUser: true,
   //   menu: [
