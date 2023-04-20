@@ -297,6 +297,16 @@ export const useSampleUsers = (pageNumber: number) => {
     isError: error,
   }
 }
+export const useSampleProperty = () => {
+  const { data, error } = useSWR('http://3.13.92.74:30005/questionnaire/admin/property', fetcher)
+  const property = data ?? []
+
+  return {
+    property,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
  export const useSampleLabels = () => {
    const { data, error } = useSWR('/admin-one-react-tailwind/data-sources/clients.json', fetcher)
    

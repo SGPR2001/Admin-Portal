@@ -9,9 +9,18 @@ const menuAside: MenuAsideItem[] = [
     label: 'Dashboard',
   },
   {
-    href: '/tables',
-    label: 'Questionarrie',
+   
+    label: 'Questionnaire',
     icon: mdiTable,
+    menu: [
+      { href: '/property', label: 'Property' },
+      { href: '/client', label: 'Client' },
+      { href: '/question', label: 'Question' },
+      { href: '/answeroption', label: 'AnswerOption' },
+      { href: '/category', label: 'Category' },
+      { href: '/questionworkflow', label: 'QuestionWorkflow' },
+    
+    ],
   },
   {
     label: 'ACL',

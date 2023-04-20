@@ -126,7 +126,8 @@ const handleSearchClick = async () => {
      <SectionMain>
        <CardBox className="mb-6">
          <div className="flex justify-between">
-           <CardBox className=" bg-gradient-to-tr from-gray-500 via-gray-500 to-gray-500 mb-6 ">
+           {/* <CardBox className=" bg-gradient-to-tr from-gray-500 via-gray-500 to-gray-500 mb-6 "> */}
+           <CardBox className="  mb-6 ">
              <div className="flex justify-end">
                <select
                  value={searchOption}
@@ -183,7 +184,7 @@ const handleSearchClick = async () => {
                />
              </div>
            </CardBox>
-           <CardBox className=" bg-gradient-to-tr from-gray-500 via-gray-500 to-gray-500 mb-6 ">
+           <CardBox className="  mb-6 ">
              <div>
                <input type="file" onChange={handleFileInputChange} />
                <BaseButton

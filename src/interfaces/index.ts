@@ -203,6 +203,14 @@ export type Dairy = {
     authenticationWay: string
     authenticationProviderId: string
   }
+  export type Property = {
+    id: string
+    entityType: string
+    entityId: string
+    value: string
+    description: string
+    clientId:string
+  }
   
  export type WeekDiet = {
    id: string

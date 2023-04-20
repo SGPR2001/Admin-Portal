@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
+import Alert from './Alert'
 function RolePermissionComponent(props) {
   const [role, setRole] = useState('')
   const [roleid, setRoleid] = useState('')
@@ -11,7 +11,16 @@ function RolePermissionComponent(props) {
   const [showDropdownb, setShowDropdownb] = useState(false)
   const [loadinga, setLoadinga] = useState(false)
 const [loadingb, setLoadingb] = useState(false)
-
+  // const [alert, setAlert] = useState(null)
+  // const showAlert = (message, type) => {
+  //   setAlert({
+  //     msg: message,
+  //     type: type,
+  //   })
+  //   setTimeout(() => {
+  //     setAlert(null)
+  //   }, 1500)
+  // }
   useEffect(() => {
     if (role) {
       setLoadinga(true)
@@ -63,19 +72,13 @@ const [loadingb, setLoadingb] = useState(false)
 
 
   const handleOptionClick = (option) => {
-   
-
     setRole(option.name)
      setRoleid(option.id)
      console.log(roleid)
-    
     setShowDropdowna(false)
-
-
   }
     const handleOptionPermissionClick = (option) => {
       // Update the role state with the selected option
-
       setPermission(option.name)
        setPermissionid(option.id)
         console.log(permissionid)
@@ -96,11 +99,14 @@ const [loadingb, setLoadingb] = useState(false)
           body: JSON.stringify(moduleData),
         })
         if (response.ok) {
-          console.log('File uploaded successfully')
-            props.showModal(true)
+            // alert('Module created successfully.')
+            props.showAlert('Role Permission created successfully', 'success')
+            // props.showModal(true)
           props.showComponent(false)
         } else {
-           props.shownotModal(true)
+          //  alert('Module not created ')
+          props.showAlert('Role Permission not created ', 'error')
+          //  props.shownotModal(true)
           console.error('Error uploading file')
         }
       } catch (error) {

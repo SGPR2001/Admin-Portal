@@ -23,11 +23,11 @@ export default function NavBar({ menu, className = '', children }: Props) {
 
   return (
     <nav
-      className={`${className} top-0 inset-0 fixed bg-gray-700 h-16 z-30 transition-position w-screen lg:w-auto dark:bg-slate-800`}
+      className={` top-0 inset-0 fixed bg-gray-700 h-16 z-30 transition-position w-screen lg:w-auto dark:bg-slate-800`}
     >
-      <div className={`flex lg:items-stretch ${containerMaxW}`}>
+      <div className={`flex lg:items-stretch`}>
         
-        <div className="    left-0 bg-gray-50 shadow-lg lg:w-auto lg:flex lg:static lg:shadow-none dark:bg-slate-800 ">
+        <div className="ml-12 bg-gray-50 shadow-lg lg:w-auto lg:flex lg:static lg:shadow-none dark:bg-slate-800 ">
           <Image src={pic} width={135} height={90} alt="image" />
         </div>
         <div className="flex flex-1 items-stretch h-14 ml-2">{children}</div>
