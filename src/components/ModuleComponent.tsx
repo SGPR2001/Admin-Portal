@@ -19,7 +19,7 @@ function ModuleComponent(props) {
       description: description,
       moduleType: selectmoduleType
     }
-    try {
+    try { 
       const response = await fetch('http://3.13.92.74:30001/acl/admin/module', {
         method: 'POST',
         headers: {

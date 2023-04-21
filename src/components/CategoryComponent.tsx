@@ -1,25 +1,26 @@
 import React, { useState } from 'react'
 
-function PropertyComponent(props) {
-  const [entityType, setEntityType] = useState('')
-   const [entityId, setEntityId] = useState('')
-    const [value, setValue] = useState('')
+function CategoryComponent(props) {
+  const [name, setName] = useState('')
+  const [categoryType, setCategoryType] = useState('')
+  const [imageUrl, setImageUrl] = useState('')
   const [description, setDescription] = useState('')
-  const [clientId, setclientId] = useState('')
+  const [sIdList, setSubCategoryIdList] = useState('')
+
   const handleCancelClick = () => {
     props.showComponent(false)
   }
   const handleAddModule = async () => {
-    
+    let subCategoryIdList = sIdList.split(',')
     const moduleData = {
-      entityType:entityType ,
-      entityId:entityId,
-      value:value,
-      description:description,
-      clientId:clientId,
+      name: name,
+      categoryType: categoryType,
+      imageUrl: imageUrl,
+      description: description,
+      subCategoryIdList: subCategoryIdList,
     }
     try {
-      const response = await fetch('http://3.13.92.74:30005/questionnaire/admin/property', {
+      const response = await fetch('http://3.13.92.74:30005/questionnaire/admin/category', {
         method: 'POST',
         headers: {
           'X-User-ID': '1',
@@ -43,53 +44,33 @@ function PropertyComponent(props) {
       <div className="flex justify-between mt-6">
         <div style={{ width: '80%' }}>
           <h2 className="text-lg font-medium">
-            <span className="font-bold">Entity Type:</span>{' '}
-            <p>
-              <input
-                className="border border-gray-400 p-1 rounded-sm"
-                value={entityType}
-                onChange={(e) => setEntityType(e.target.value)}
-              />
+            <span className="font-bold"> Name:</span>{' '}
+            <p className="border border-gray-400 p-1 rounded-sm">
+              <input value={name} onChange={(e) => setName(e.target.value)} />
             </p>
           </h2>
           <h2 className="text-lg font-medium">
-            <span className="font-bold">Entity Id:</span>{' '}
-            <p>
-              <input
-                className="border border-gray-400 p-1 rounded-sm"
-                value={entityId}
-                onChange={(e) => setEntityId(e.target.value)}
-              />
+            <span className="font-bold">Category Type:</span>{' '}
+            <p className="border border-gray-400 p-1 rounded-sm">
+              <input value={categoryType} onChange={(e) => setCategoryType(e.target.value)} />
             </p>
           </h2>
           <h2 className="text-lg font-medium">
-            <span className="font-bold">Value:</span>{' '}
-            <p>
-              <input
-                className="border border-gray-400 p-1 rounded-sm"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-              />
+            <span className="font-bold">ImageUrl:</span>{' '}
+            <p className="border border-gray-400 p-1 rounded-sm">
+              <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
             </p>
           </h2>
           <h2 className="text-lg font-medium">
             <span className="font-bold">Description:</span>{' '}
-            <p>
-              <input
-                className="border border-gray-400 p-1 rounded-sm"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
+            <p className="border border-gray-400 p-1 rounded-sm">
+              <input value={description} onChange={(e) => setDescription(e.target.value)} />
             </p>
           </h2>
           <h2 className="text-lg font-medium">
-            <span className="font-bold">Client Id:</span>{' '}
-            <p>
-              <input
-                className="border border-gray-400 p-1 rounded-sm"
-                value={clientId}
-                onChange={(e) => setclientId(e.target.value)}
-              />
+            <span className="font-bold">SubCategoryId List:</span>{' '}
+            <p className="border border-gray-400 p-1 rounded-sm">
+              <input value={sIdList} onChange={(e) => setSubCategoryIdList(e.target.value)} />
             </p>
           </h2>
         </div>
@@ -125,4 +106,4 @@ function PropertyComponent(props) {
     </>
   )
 }
-export default PropertyComponent
+export default CategoryComponent

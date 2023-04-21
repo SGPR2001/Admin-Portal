@@ -307,6 +307,46 @@ export const useSampleProperty = () => {
     isError: error,
   }
 }
+export const useSampleAnswerOption = () => {
+  const { data, error } = useSWR('http://3.13.92.74:30005/questionnaire/admin/answer-option', fetcher)
+  const answeroption = data ?? []
+
+  return {
+    answeroption,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+export const useSampleCategory = () => {
+  const { data, error } = useSWR('http://3.13.92.74:30005/questionnaire/admin/category', fetcher)
+  const category = data ?? []
+
+  return {
+    category,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+export const useSampleQuestion = () => {
+  const { data, error } = useSWR('http://3.13.92.74:30005/questionnaire/admin/question', fetcher)
+  const question = data ?? []
+
+  return {
+    question,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+export const useSampleClientQuestion = () => {
+  const { data, error } = useSWR('http://3.13.92.74:30005/questionnaire/admin/client', fetcher)
+  const client = data ?? []
+
+  return {
+    client,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
  export const useSampleLabels = () => {
    const { data, error } = useSWR('/admin-one-react-tailwind/data-sources/clients.json', fetcher)
    

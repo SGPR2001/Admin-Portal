@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 
-function PropertyItem({ property }) {
+function CategoryItem({ category }) {
   const [editing, setEditing] = useState(false)
-  const [entityType, setEntityType] = useState(property.entityType)
-  const [entityId, setEntityId] = useState(property.entityId)
-  const [value, setValue] = useState(property.value)
-  const [description, setdescription] = useState( property.description)
-  const [clientId, setclientId] = useState(property.clientId)
-
-  const [showDetails, setShowDetails] = useState(false)
+  const [name, setName] = useState(category.name)
+  const [categoryType, setCategoryType] = useState(category.categoryType)
+  const [imageUrl, setImageUrl] = useState(category.imageUrl)
+  const [description, setDescription] = useState(category.description)
+  const [sIdList, setSubCategoryIdList] = useState(category.sIdList)
   const handleEditClick = () => {
     setEditing(true)
   }
@@ -16,21 +14,22 @@ function PropertyItem({ property }) {
     setEditing(false)
   }
   const handleUpdateClick = async () => {
+    let subCategoryIdList = sIdList.split(',')
     try {
       const response = await fetch(
-        `http://3.13.92.74:30005/questionnaire/admin/property/id/${property.id}`,
+        `http://3.13.92.74:30005/questionnaire/admin/category/id/${category.id}`,
         {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'X-User-ID': '1',
+            'X-USER-ID': '1',
           },
           body: JSON.stringify({
-            entityType,
-            entityId,
-            value,
+            name,
+            categoryType,
+            imageUrl,
             description,
-            clientId,
+            subCategoryIdList,
           }),
         }
       )
@@ -60,33 +59,33 @@ function PropertyItem({ property }) {
               }}
             >
               <h2 className="text-lg font-medium">
-                <span className="font-bold">Entity Type:</span>{' '}
+                <span className="font-bold"> Name:</span>{' '}
                 <p className="border border-gray-400 p-1 rounded-sm">
-                  <input value={entityType} onChange={(e) => setEntityType(e.target.value)} />
+                  <input value={name} onChange={(e) => setName(e.target.value)} />
                 </p>
               </h2>
               <h2 className="text-lg font-medium">
-                <span className="font-bold">EntityId:</span>{' '}
+                <span className="font-bold">Category Type:</span>{' '}
                 <p className="border border-gray-400 p-1 rounded-sm">
-                  <input value={entityId} onChange={(e) => setEntityId(e.target.value)} />
+                  <input value={categoryType} onChange={(e) => setCategoryType(e.target.value)} />
                 </p>
               </h2>
               <h2 className="text-lg font-medium">
-                <span className="font-bold"> Value:</span>{' '}
+                <span className="font-bold">ImageUrl:</span>{' '}
                 <p className="border border-gray-400 p-1 rounded-sm">
-                  <input value={value} onChange={(e) => setValue(e.target.value)} />
+                  <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
                 </p>
               </h2>
               <h2 className="text-lg font-medium">
-                <span className="font-bold"> Description:</span>{' '}
+                <span className="font-bold">Description:</span>{' '}
                 <p className="border border-gray-400 p-1 rounded-sm">
-                  <input value={description} onChange={(e) => setdescription(e.target.value)} />
+                  <input value={description} onChange={(e) => setDescription(e.target.value)} />
                 </p>
               </h2>
               <h2 className="text-lg font-medium">
-                <span className="font-bold"> Client Id:</span>{' '}
+                <span className="font-bold">SubCategoryId List:</span>{' '}
                 <p className="border border-gray-400 p-1 rounded-sm">
-                  <input value={clientId} onChange={(e) => setclientId(e.target.value)} />
+                  <input value={sIdList} onChange={(e) => setSubCategoryIdList(e.target.value)} />
                 </p>
               </h2>
             </div>
@@ -123,57 +122,25 @@ function PropertyItem({ property }) {
               }}
             >
               <h2 className="text-lg font-medium">
-                <span className="font-bold"> Entity Type:</span>
-                <p className=" h-10 border border-gray-400 p-1 rounded-sm">{entityType}</p>
+                <span className="font-bold"> Name:</span>
+                <p className=" h-10 border border-gray-400 p-1 rounded-sm">{name}</p>
               </h2>
               <h2 className="text-lg font-medium">
-                <span className="font-bold">Entity Id:</span>
-                <p className="h-10 border border-gray-400 p-1 rounded-sm">{entityId}</p>
+                <span className="font-bold">CategoryType:</span>
+                <p className="h-10 border border-gray-400 p-1 rounded-sm">{categoryType}</p>
               </h2>
-
-              {showDetails && (
-                <>
-                  <h2 className="text-lg font-medium">
-                    <span className="font-bold">Value:</span>
-                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{value}</p>
-                  </h2>
-                  <h2 className="text-lg font-medium">
-                    <span className="font-bold">Description:</span>
-                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{description}</p>
-                  </h2>
-                  <h2 className="text-lg font-medium">
-                    <span className="font-bold">Client Id:</span>
-                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{clientId}</p>
-                  </h2>
-
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <a onClick={() => setShowDetails(false)}>
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/2926/2926319.png"
-                        alt="Show more"
-                        className="py-2 px-4 rounded-md cursor-pointer mb-4"
-                        style={{
-                          width: 80,
-                          height: 50,
-                          justifyContent: 'center',
-                        }}
-                      />
-                    </a>
-                  </div>
-                </>
-              )}
-              {!showDetails && (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <a onClick={() => setShowDetails(true)}>
-                    <img
-                      src="https://p.kindpng.com/picc/s/134-1344553_double-chevron-down-down-arrow-icon-png-transparent.png"
-                      alt="Show more"
-                      className="py-2 px-4 rounded-md cursor-pointer mb-4"
-                      style={{ width: 70, height: 50, justifyContent: 'center' }}
-                    />
-                  </a>
-                </div>
-              )}
+              <h2 className="text-lg font-medium">
+                <span className="font-bold">Imageurl:</span>
+                <p className="h-10 border border-gray-400 p-1 rounded-sm">{imageUrl}</p>
+              </h2>
+              <h2 className="text-lg font-medium">
+                <span className="font-bold">Description:</span>
+                <p className="h-10 border border-gray-400 p-1 rounded-sm">{description}</p>
+              </h2>
+              <h2 className="text-lg font-medium">
+                <span className="font-bold">SubCategoryId List:</span>
+                <p className="h-10 border border-gray-400 p-1 rounded-sm">{sIdList}</p>
+              </h2>
             </div>
 
             <div
@@ -209,4 +176,4 @@ function PropertyItem({ property }) {
   )
 }
 
-export default PropertyItem
+export default CategoryItem

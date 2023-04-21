@@ -4,16 +4,16 @@ import SectionMain from '../components/SectionMain'
 import CardBox from '../components/CardBox'
 import BaseButton from '../components/BaseButton'
 import LayoutAuthenticated from '../layouts/Authenticated'
-import { useSampleClientQuestion} from '../hooks/sampleData'
-import ClientQuestionComponent from '../components/ClientQuestionComponent'
-import ClientQuestionItem from '../components/ClientQuestionItem'
-import { ClientQuestion } from '../interfaces'
+import { useSampleAnswerOption } from '../hooks/sampleData'
+import { AnswerOption } from '../interfaces'
+import AnswerOptionItem from '../components/AnswerOptionItem'
+import AnswerOptionComponent from '../components/AnswerOptionComponent'
 const TablesPage = () => {
   const [searchOption, setSearchOption] = useState('')
   const [searchId, setSearchId] = useState('')
   const [showComponent, setShowComponent] = useState(false)
-  const { client } = useSampleClientQuestion()
-  const originalData = client && client.response ? client.response : []
+  const { answeroption } = useSampleAnswerOption()
+  const originalData = answeroption && answeroption.response ? answeroption.response : []
 
   const [data, setData] = useState([])
   const handleSearchClick = async () => {
@@ -21,7 +21,7 @@ const TablesPage = () => {
       let url
       if (searchOption === 'id') {
         if (searchId) {
-          url = `http://3.13.92.74:30005/questionnaire/admin/client/id/${searchId}`
+          url = `http://3.13.92.74:30005/questionnaire/admin/answer-option/id/${searchId}`
           const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -29,9 +29,9 @@ const TablesPage = () => {
             },
           })
           if (response.ok) {
-            const client = await response.json()
-            console.log(client)
-            setData([client.response])
+            const answeroption = await response.json()
+            console.log(answeroption)
+            setData([answeroption.response])
           } else {
             console.error('Error searching for formulations')
           }
@@ -39,8 +39,8 @@ const TablesPage = () => {
           console.error('Please enter an ID to search')
           return
         }
-      } else if (searchOption === 'name') {
-        url = `http://3.13.92.74:30005/questionnaire/admin/client/name/${searchId}`
+      } else {
+        url = `http://3.13.92.74:30005/questionnaire/admin/answer-option/content/${searchId}`
         const response = await fetch(url, {
           method: 'GET',
           headers: {
@@ -48,9 +48,9 @@ const TablesPage = () => {
           },
         })
         if (response.ok) {
-          const client = await response.json()
-          console.log(client)
-          setData([client.response])
+          const answeroption = await response.json()
+          console.log(answeroption)
+          setData(answeroption.response)
         } else {
           console.error('Error searching for formulations')
         }
@@ -77,7 +77,7 @@ const TablesPage = () => {
                 >
                   <option value="">Select an option</option>
                   <option value="id">By ID</option>
-                  <option value="name">By Name</option>
+                  <option value="regex">By Content Regex</option>
                 </select>
                 {searchOption === 'id' && (
                   <div className="flex justify-end">
@@ -91,11 +91,11 @@ const TablesPage = () => {
                     />
                   </div>
                 )}
-                {searchOption === 'name' && (
+                {searchOption === 'regex' && (
                   <div className="flex justify-end">
                     <input
                       type="text"
-                      placeholder="Enter Name"
+                      placeholder="Enter Content"
                       value={searchId}
                       onChange={(e) => setSearchId(e.target.value)}
                       className="bg-white border border-gray-400 rounded-full px-3 py-2 outline-none mr-4"
@@ -115,7 +115,7 @@ const TablesPage = () => {
             <CardBox className=" mb-6 ">
               <div>
                 <BaseButton
-                  label="Create client"
+                  label="Create answeroption"
                   onClick={() => setShowComponent(true)}
                   className="bg-blue-500 border-blue-500 hover:bg-[#7dd3fc] text-white font-bold py-2 px-4 rounded"
                 />
@@ -125,20 +125,20 @@ const TablesPage = () => {
         </CardBox>
         {showComponent && (
           <CardBox className="mb-6">
-            <ClientQuestionComponent showComponent={handleCancelClick} />
+            <AnswerOptionComponent showComponent={handleCancelClick} />
           </CardBox>
         )}
 
         <CardBox className=" mb-6">
           {searchId.length > 0
-            ? data.map((client: ClientQuestion) => (
+            ? data.map((answeroption: AnswerOption) => (
                 <CardBox className="w-640 h-640 mb-4">
-                  <ClientQuestionItem key={client.id} client={client} />
+                  <AnswerOptionItem key={answeroption.id} answeroption={answeroption} />
                 </CardBox>
               ))
-            : originalData.map((client: ClientQuestion) => (
+            : originalData.map((answeroption: AnswerOption) => (
                 <CardBox className="w-640 h-640 mb-2">
-                  <ClientQuestionItem key={client.id} client={client} />
+                  <AnswerOptionItem key={answeroption.id} answeroption={answeroption} />
                 </CardBox>
               ))}
         </CardBox>

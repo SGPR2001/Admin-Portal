@@ -4,16 +4,16 @@ import SectionMain from '../components/SectionMain'
 import CardBox from '../components/CardBox'
 import BaseButton from '../components/BaseButton'
 import LayoutAuthenticated from '../layouts/Authenticated'
-import { useSampleClientQuestion} from '../hooks/sampleData'
-import ClientQuestionComponent from '../components/ClientQuestionComponent'
-import ClientQuestionItem from '../components/ClientQuestionItem'
-import { ClientQuestion } from '../interfaces'
+import { useSampleCategory } from '../hooks/sampleData'
+import { Category } from '../interfaces'
+import CategoryComponent from '../components/CategoryComponent'
+import CategoryItem from '../components/CategoryItem'
 const TablesPage = () => {
   const [searchOption, setSearchOption] = useState('')
   const [searchId, setSearchId] = useState('')
   const [showComponent, setShowComponent] = useState(false)
-  const { client } = useSampleClientQuestion()
-  const originalData = client && client.response ? client.response : []
+  const { category } = useSampleCategory()
+  const originalData = category && category.response ? category.response : []
 
   const [data, setData] = useState([])
   const handleSearchClick = async () => {
@@ -21,7 +21,7 @@ const TablesPage = () => {
       let url
       if (searchOption === 'id') {
         if (searchId) {
-          url = `http://3.13.92.74:30005/questionnaire/admin/client/id/${searchId}`
+          url = `http://3.13.92.74:30005/questionnaire/admin/category/id/${searchId}`
           const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -29,9 +29,9 @@ const TablesPage = () => {
             },
           })
           if (response.ok) {
-            const client = await response.json()
-            console.log(client)
-            setData([client.response])
+            const category = await response.json()
+            console.log(category)
+            setData([category.response])
           } else {
             console.error('Error searching for formulations')
           }
@@ -40,7 +40,7 @@ const TablesPage = () => {
           return
         }
       } else if (searchOption === 'name') {
-        url = `http://3.13.92.74:30005/questionnaire/admin/client/name/${searchId}`
+        url = `http://3.13.92.74:30005/questionnaire/admin/category/name/${searchId}`
         const response = await fetch(url, {
           method: 'GET',
           headers: {
@@ -48,9 +48,24 @@ const TablesPage = () => {
           },
         })
         if (response.ok) {
-          const client = await response.json()
-          console.log(client)
-          setData([client.response])
+          const category = await response.json()
+          console.log(category)
+          setData([category.response])
+        } else {
+          console.error('Error searching for formulations')
+        }
+      } else  {
+        url = `http://3.13.92.74:30005/questionnaire/user/category/type/${searchId}`
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'X-category-ID': '1',
+          },
+        })
+        if (response.ok) {
+          const category = await response.json()
+          console.log(category)
+          setData(category.response)
         } else {
           console.error('Error searching for formulations')
         }
@@ -78,6 +93,7 @@ const TablesPage = () => {
                   <option value="">Select an option</option>
                   <option value="id">By ID</option>
                   <option value="name">By Name</option>
+                  <option value="categorytype">By CategoryType</option>
                 </select>
                 {searchOption === 'id' && (
                   <div className="flex justify-end">
@@ -95,7 +111,19 @@ const TablesPage = () => {
                   <div className="flex justify-end">
                     <input
                       type="text"
-                      placeholder="Enter Name"
+                      placeholder="Enter name"
+                      value={searchId}
+                      onChange={(e) => setSearchId(e.target.value)}
+                      className="bg-white border border-gray-400 rounded-full px-3 py-2 outline-none mr-4"
+                      style={{ width: '200px' }}
+                    />
+                  </div>
+                )}
+                {searchOption === 'categorytype' && (
+                  <div className="flex justify-end">
+                    <input
+                      type="text"
+                      placeholder="Enter categoryType"
                       value={searchId}
                       onChange={(e) => setSearchId(e.target.value)}
                       className="bg-white border border-gray-400 rounded-full px-3 py-2 outline-none mr-4"
@@ -115,7 +143,7 @@ const TablesPage = () => {
             <CardBox className=" mb-6 ">
               <div>
                 <BaseButton
-                  label="Create client"
+                  label="Create category"
                   onClick={() => setShowComponent(true)}
                   className="bg-blue-500 border-blue-500 hover:bg-[#7dd3fc] text-white font-bold py-2 px-4 rounded"
                 />
@@ -125,20 +153,20 @@ const TablesPage = () => {
         </CardBox>
         {showComponent && (
           <CardBox className="mb-6">
-            <ClientQuestionComponent showComponent={handleCancelClick} />
+            <CategoryComponent showComponent={handleCancelClick} />
           </CardBox>
         )}
 
         <CardBox className=" mb-6">
           {searchId.length > 0
-            ? data.map((client: ClientQuestion) => (
+            ? data.map((category: Category) => (
                 <CardBox className="w-640 h-640 mb-4">
-                  <ClientQuestionItem key={client.id} client={client} />
+                  <CategoryItem key={category.name} category={category} />
                 </CardBox>
               ))
-            : originalData.map((client: ClientQuestion) => (
+            : originalData.map((category: Category) => (
                 <CardBox className="w-640 h-640 mb-2">
-                  <ClientQuestionItem key={client.id} client={client} />
+                  <CategoryItem key={category.name} category={category} />
                 </CardBox>
               ))}
         </CardBox>

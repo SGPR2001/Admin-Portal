@@ -1,25 +1,20 @@
 import React, { useState } from 'react'
 
-function PropertyComponent(props) {
-  const [entityType, setEntityType] = useState('')
-   const [entityId, setEntityId] = useState('')
-    const [value, setValue] = useState('')
-  const [description, setDescription] = useState('')
-  const [clientId, setclientId] = useState('')
+function AnswerOptionComponent(props) {
+  const [content, setContent] = useState('')
+  const [pIdList, setPropertyIdList] = useState('')
+  
   const handleCancelClick = () => {
     props.showComponent(false)
   }
   const handleAddModule = async () => {
-    
+     let propertyIdList = pIdList.split(',')
     const moduleData = {
-      entityType:entityType ,
-      entityId:entityId,
-      value:value,
-      description:description,
-      clientId:clientId,
+      content: content,
+      propertyIdList: propertyIdList,
     }
     try {
-      const response = await fetch('http://3.13.92.74:30005/questionnaire/admin/property', {
+      const response = await fetch('http://3.13.92.74:30005/questionnaire/admin/answer-option', {
         method: 'POST',
         headers: {
           'X-User-ID': '1',
@@ -43,55 +38,28 @@ function PropertyComponent(props) {
       <div className="flex justify-between mt-6">
         <div style={{ width: '80%' }}>
           <h2 className="text-lg font-medium">
-            <span className="font-bold">Entity Type:</span>{' '}
+            <span className="font-bold">Content:</span>{' '}
             <p>
               <input
                 className="border border-gray-400 p-1 rounded-sm"
-                value={entityType}
-                onChange={(e) => setEntityType(e.target.value)}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
               />
             </p>
           </h2>
           <h2 className="text-lg font-medium">
-            <span className="font-bold">Entity Id:</span>{' '}
+            <span className="font-bold">PropertyId List:</span>{' '}
             <p>
               <input
                 className="border border-gray-400 p-1 rounded-sm"
-                value={entityId}
-                onChange={(e) => setEntityId(e.target.value)}
+                value={pIdList}
+                onChange={(e) => setPropertyIdList(e.target.value)}
               />
             </p>
           </h2>
-          <h2 className="text-lg font-medium">
-            <span className="font-bold">Value:</span>{' '}
-            <p>
-              <input
-                className="border border-gray-400 p-1 rounded-sm"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-              />
-            </p>
-          </h2>
-          <h2 className="text-lg font-medium">
-            <span className="font-bold">Description:</span>{' '}
-            <p>
-              <input
-                className="border border-gray-400 p-1 rounded-sm"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </p>
-          </h2>
-          <h2 className="text-lg font-medium">
-            <span className="font-bold">Client Id:</span>{' '}
-            <p>
-              <input
-                className="border border-gray-400 p-1 rounded-sm"
-                value={clientId}
-                onChange={(e) => setclientId(e.target.value)}
-              />
-            </p>
-          </h2>
+          
+         
+         
         </div>
         <div
           style={{
@@ -125,4 +93,4 @@ function PropertyComponent(props) {
     </>
   )
 }
-export default PropertyComponent
+export default AnswerOptionComponent

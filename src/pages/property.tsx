@@ -25,7 +25,7 @@ const TablesPage = () => {
           const response = await fetch(url, {
             method: 'GET',
             headers: {
-              'X-property-ID': '1',
+              'X-USER-ID': '1',
             },
           })
           if (response.ok) {
@@ -44,7 +44,7 @@ const TablesPage = () => {
         const response = await fetch(url, {
           method: 'GET',
           headers: {
-            'X-property-ID': '1',
+            'X-USER-ID': '1',
           },
         })
         if (response.ok) {

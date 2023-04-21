@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 
-function PropertyItem({ property }) {
+function QuestionItem({ question }) {
   const [editing, setEditing] = useState(false)
-  const [entityType, setEntityType] = useState(property.entityType)
-  const [entityId, setEntityId] = useState(property.entityId)
-  const [value, setValue] = useState(property.value)
-  const [description, setdescription] = useState( property.description)
-  const [clientId, setclientId] = useState(property.clientId)
-
+  const [content, setContent] = useState(question.content)
+  const [categoryId, setCategoryId] = useState(question.categoryId)
+  const [groupId, setGroupId] = useState(question.groupId)
+  const [inputType, setInputType] = useState(question.inputType)
+  const [aIdList, setAnswerOptionIdList] = useState(question.aIdList)
+  const [isSkippable, setIsSkippable] = useState(question.isSkippable)
+  const [paoptions, setPAO] = useState(question.paoptions)
+  const [qwId, setQwId] = useState(question.qwId)
+  const [hwended, setHwended] = useState(question.hwended)
+  const [cgback, setCgback] = useState(question.cgback)
   const [showDetails, setShowDetails] = useState(false)
   const handleEditClick = () => {
     setEditing(true)
@@ -16,21 +20,23 @@ function PropertyItem({ property }) {
     setEditing(false)
   }
   const handleUpdateClick = async () => {
+    let answerOptionIdList = aIdList.split(',')
     try {
       const response = await fetch(
-        `http://3.13.92.74:30005/questionnaire/admin/property/id/${property.id}`,
+        `http://3.13.92.74:30005/questionnaire/admin/question/id/${question.id}`,
         {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'X-User-ID': '1',
+            'X-USER-ID': '1',
           },
           body: JSON.stringify({
-            entityType,
-            entityId,
-            value,
-            description,
-            clientId,
+            content,
+            categoryId,
+            groupId,
+            inputType,
+            answerOptionIdList,
+            isSkippable,
           }),
         }
       )
@@ -60,33 +66,63 @@ function PropertyItem({ property }) {
               }}
             >
               <h2 className="text-lg font-medium">
-                <span className="font-bold">Entity Type:</span>{' '}
+                <span className="font-bold"> Content:</span>{' '}
                 <p className="border border-gray-400 p-1 rounded-sm">
-                  <input value={entityType} onChange={(e) => setEntityType(e.target.value)} />
+                  <input value={content} onChange={(e) => setContent(e.target.value)} />
                 </p>
               </h2>
               <h2 className="text-lg font-medium">
-                <span className="font-bold">EntityId:</span>{' '}
+                <span className="font-bold">Category Id:</span>{' '}
                 <p className="border border-gray-400 p-1 rounded-sm">
-                  <input value={entityId} onChange={(e) => setEntityId(e.target.value)} />
+                  <input value={categoryId} onChange={(e) => setCategoryId(e.target.value)} />
                 </p>
               </h2>
               <h2 className="text-lg font-medium">
-                <span className="font-bold"> Value:</span>{' '}
+                <span className="font-bold">Group Id:</span>{' '}
                 <p className="border border-gray-400 p-1 rounded-sm">
-                  <input value={value} onChange={(e) => setValue(e.target.value)} />
+                  <input value={groupId} onChange={(e) => setGroupId(e.target.value)} />
                 </p>
               </h2>
               <h2 className="text-lg font-medium">
-                <span className="font-bold"> Description:</span>{' '}
+                <span className="font-bold">InputType:</span>{' '}
                 <p className="border border-gray-400 p-1 rounded-sm">
-                  <input value={description} onChange={(e) => setdescription(e.target.value)} />
+                  <input value={inputType} onChange={(e) => setInputType(e.target.value)} />
                 </p>
               </h2>
               <h2 className="text-lg font-medium">
-                <span className="font-bold"> Client Id:</span>{' '}
+                <span className="font-bold">IsSkippable:</span>{' '}
                 <p className="border border-gray-400 p-1 rounded-sm">
-                  <input value={clientId} onChange={(e) => setclientId(e.target.value)} />
+                  <input value={isSkippable} onChange={(e) => setIsSkippable(e.target.value)} />
+                </p>
+              </h2>
+              <h2 className="text-lg font-medium">
+                <span className="font-bold">AnswerOptionList:</span>{' '}
+                <p className="border border-gray-400 p-1 rounded-sm">
+                  <input value={aIdList} onChange={(e) => setAnswerOptionIdList(e.target.value)} />
+                </p>
+              </h2>
+              <h2 className="text-lg font-medium">
+                <span className="font-bold">PreviousAnswerOptions:</span>{' '}
+                <p className="border border-gray-400 p-1 rounded-sm">
+                  <input value={paoptions} onChange={(e) => setPAO(e.target.value)} />
+                </p>
+              </h2>
+              <h2 className="text-lg font-medium">
+                <span className="font-bold">QuestionWorkflowId:</span>{' '}
+                <p className="border border-gray-400 p-1 rounded-sm">
+                  <input value={qwId} onChange={(e) => setQwId(e.target.value)} />
+                </p>
+              </h2>
+              <h2 className="text-lg font-medium">
+                <span className="font-bold">HasWorkFlowEnded:</span>{' '}
+                <p className="border border-gray-400 p-1 rounded-sm">
+                  <input value={hwended} onChange={(e) => setHwended(e.target.value)} />
+                </p>
+              </h2>
+              <h2 className="text-lg font-medium">
+                <span className="font-bold">CanGoBack:</span>{' '}
+                <p className="border border-gray-400 p-1 rounded-sm">
+                  <input value={cgback} onChange={(e) => setCgback(e.target.value)} />
                 </p>
               </h2>
             </div>
@@ -123,29 +159,47 @@ function PropertyItem({ property }) {
               }}
             >
               <h2 className="text-lg font-medium">
-                <span className="font-bold"> Entity Type:</span>
-                <p className=" h-10 border border-gray-400 p-1 rounded-sm">{entityType}</p>
+                <span className="font-bold"> Content:</span>
+                <p className=" h-10 border border-gray-400 p-1 rounded-sm">{content}</p>
               </h2>
               <h2 className="text-lg font-medium">
-                <span className="font-bold">Entity Id:</span>
-                <p className="h-10 border border-gray-400 p-1 rounded-sm">{entityId}</p>
+                <span className="font-bold">CategoryId:</span>
+                <p className="h-10 border border-gray-400 p-1 rounded-sm">{categoryId}</p>
               </h2>
-
+              <h2 className="text-lg font-medium">
+                <span className="font-bold">GroupId:</span>
+                <p className="h-10 border border-gray-400 p-1 rounded-sm">{groupId}</p>
+              </h2>
+              <h2 className="text-lg font-medium">
+                <span className="font-bold">InputType:</span>
+                <p className="h-10 border border-gray-400 p-1 rounded-sm">{inputType}</p>
+              </h2>
               {showDetails && (
                 <>
                   <h2 className="text-lg font-medium">
-                    <span className="font-bold">Value:</span>
-                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{value}</p>
+                    <span className="font-bold">IsSkippable:</span>
+                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{isSkippable}</p>
                   </h2>
                   <h2 className="text-lg font-medium">
-                    <span className="font-bold">Description:</span>
-                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{description}</p>
+                    <span className="font-bold">AnswerOptionList:</span>
+                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{aIdList}</p>
                   </h2>
                   <h2 className="text-lg font-medium">
-                    <span className="font-bold">Client Id:</span>
-                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{clientId}</p>
+                    <span className="font-bold">PreviousAnsweredOptions:</span>
+                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{paoptions}</p>
                   </h2>
-
+                  <h2 className="text-lg font-medium">
+                    <span className="font-bold">QuestionWorkFlowId:</span>
+                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{qwId}</p>
+                  </h2>
+                  <h2 className="text-lg font-medium">
+                    <span className="font-bold">HasWorkFlowEnded:</span>
+                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{hwended}</p>
+                  </h2>
+                  <h2 className="text-lg font-medium">
+                    <span className="font-bold">CanGoBack:</span>
+                    <p className="h-10 border border-gray-400 p-1 rounded-sm">{cgback}</p>
+                  </h2>
                   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <a onClick={() => setShowDetails(false)}>
                       <img
@@ -209,4 +263,4 @@ function PropertyItem({ property }) {
   )
 }
 
-export default PropertyItem
+export default QuestionItem

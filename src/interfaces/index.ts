@@ -211,6 +211,37 @@ export type Dairy = {
     description: string
     clientId:string
   }
+   export type AnswerOption = {
+     id: string
+     content: string
+    
+   }
+    export type Category = {
+      name: string
+      categoryType: string
+      imageUrl: string
+      description: string
+      subCategoryIdList: string[]
+    }
+     export type Question = {
+       id: string
+       content: string
+       categoryId: string
+       groupId: string
+       inputType: string
+       isSkippable: boolean
+       answerOptionList: string
+       previousAnsweredOptions: string
+       questionWorkflowId: string
+       hasWorkflowEnded: string
+       canGoBack: boolean
+     }
+   export type ClientQuestion = {
+     id: string
+     name: string
+     propertyCallbackUrl: string
+     method: string
+   }
   
  export type WeekDiet = {
    id: string

@@ -25,11 +25,13 @@ const StyleSelect = () => {
 
     dispatch(setStyle(style))
 
+    // router.push('http://3.13.92.74:30006/authentication/login')
     router.push('/login')
   }
 
   return (
     <>
+      
       <Head>
         <title>{appTitle}</title>
       </Head>
